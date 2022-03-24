@@ -5,20 +5,20 @@
 using namespace std;
 
 
-/* Задача варианта 25.
-Дано предложение, слова в котором разделены любыми допустимыми знаками препинания. 
-Сформировать массив из слов, в которых заданная подстрока размещается с первой позиции.  */
+/* Р—Р°РґР°С‡Р° РІР°СЂРёР°РЅС‚Р° 25.
+Р”Р°РЅРѕ РїСЂРµРґР»РѕР¶РµРЅРёРµ, СЃР»РѕРІР° РІ РєРѕС‚РѕСЂРѕРј СЂР°Р·РґРµР»РµРЅС‹ Р»СЋР±С‹РјРё РґРѕРїСѓСЃС‚РёРјС‹РјРё Р·РЅР°РєР°РјРё РїСЂРµРїРёРЅР°РЅРёСЏ. 
+РЎС„РѕСЂРјРёСЂРѕРІР°С‚СЊ РјР°СЃСЃРёРІ РёР· СЃР»РѕРІ, РІ РєРѕС‚РѕСЂС‹С… Р·Р°РґР°РЅРЅР°СЏ РїРѕРґСЃС‚СЂРѕРєР° СЂР°Р·РјРµС‰Р°РµС‚СЃСЏ СЃ РїРµСЂРІРѕР№ РїРѕР·РёС†РёРё.  */
 
-// 1. Вариант на C-string
-// 2. Вариант на std::string
+// 1. Р’Р°СЂРёР°РЅС‚ РЅР° C-string
+// 2. Р’Р°СЂРёР°РЅС‚ РЅР° std::string
 
-// реализуем функцию с учетом того, что на вход мы получаем данные в заведомо верном формате (как указано в условии), переводим в нижний регистр
+// СЂРµР°Р»РёР·СѓРµРј С„СѓРЅРєС†РёСЋ СЃ СѓС‡РµС‚РѕРј С‚РѕРіРѕ, С‡С‚Рѕ РЅР° РІС…РѕРґ РјС‹ РїРѕР»СѓС‡Р°РµРј РґР°РЅРЅС‹Рµ РІ Р·Р°РІРµРґРѕРјРѕ РІРµСЂРЅРѕРј С„РѕСЂРјР°С‚Рµ (РєР°Рє СѓРєР°Р·Р°РЅРѕ РІ СѓСЃР»РѕРІРёРё), РїРµСЂРµРІРѕРґРёРј РІ РЅРёР¶РЅРёР№ СЂРµРіРёСЃС‚СЂ
 vector<string> find_same(const char* sentence, const char* to_find)
 {
     vector<string> words_wsb;
     const size_t len = strlen(sentence);
     const int len_of_to_find = strlen(to_find);
-    bool f = true, word_is_ok = false; // word_is_ok указывает на совпадение всей подстроки, будем просто докидывать оставшиеся символы; f указывает на новое слово
+    bool f = true, word_is_ok = false; // word_is_ok СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕРІРїР°РґРµРЅРёРµ РІСЃРµР№ РїРѕРґСЃС‚СЂРѕРєРё, Р±СѓРґРµРј РїСЂРѕСЃС‚Рѕ РґРѕРєРёРґС‹РІР°С‚СЊ РѕСЃС‚Р°РІС€РёРµСЃСЏ СЃРёРјРІРѕР»С‹; f СѓРєР°Р·С‹РІР°РµС‚ РЅР° РЅРѕРІРѕРµ СЃР»РѕРІРѕ
     int num_of_pos = 0;
     string this_word = "";
     for (unsigned long i = 0; i < len; i++)
@@ -57,12 +57,68 @@ vector<string> find_same(const char* sentence, const char* to_find)
     return words_wsb;
 }
 
+vector<string> find_same(const string sentence, const string to_find) // СЂР°Р·РЅРёС†С‹ РІ СЂРµР°Р»РёР·Р°С†РёРё РЅРµС‚ Р°Р±СЃРѕР»СЋС‚РЅРѕ РЅРёРєР°РєРѕР№, С‚РѕР»СЊРєРѕ РјРµС‚РѕРґ РѕРїСЂРµРґРµР»РµРЅРёСЏ РґР»РёРЅС‹ СЂР°Р·Р»РёС‡Р°РµС‚СЃСЏ
+{
+    vector<string> words_wsb;
+    const size_t len = sentence.length();
+    const int len_of_to_find = to_find.length();
+    bool f = true, word_is_ok = false; // word_is_ok СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕРІРїР°РґРµРЅРёРµ РІСЃРµР№ РїРѕРґСЃС‚СЂРѕРєРё, Р±СѓРґРµРј РїСЂРѕСЃС‚Рѕ РґРѕРєРёРґС‹РІР°С‚СЊ РѕСЃС‚Р°РІС€РёРµСЃСЏ СЃРёРјРІРѕР»С‹; f СѓРєР°Р·С‹РІР°РµС‚ РЅР° РЅРѕРІРѕРµ СЃР»РѕРІРѕ
+    int num_of_pos = 0;
+    string this_word = "";
+    for (unsigned long i = 0; i < len; i++)
+    {
+        if (isalpha(sentence[i]) && f)
+        {
+            if (not word_is_ok)
+            {
+                if (tolower(sentence[i]) == to_find[num_of_pos])
+                {
+                    num_of_pos++;
+                    this_word += sentence[i];
+                    if (num_of_pos == len_of_to_find)
+                        word_is_ok = true;
+                }
+                else
+                    f = false;
+            }
+            else
+                this_word += sentence[i];
+        }
+        else if (not isalpha(sentence[i]))
+        {
+            if (word_is_ok)
+                words_wsb.push_back(this_word);
+            word_is_ok = false;
+            f = true;
+            num_of_pos = 0;
+            this_word = "";
+        }
+
+        if (i == len - 1 && word_is_ok)
+            words_wsb.push_back(this_word);
+    }
+
+    return words_wsb;
+}
+
 int main()
 {
-    /* 1. */
+    /* 1. 
 
     const char* sentence1 = "My name is Boris, I am a great football player! Team: Boston Boilers";
     const char* to_find = "bo";
+    const vector<string> words_wsb = find_same(sentence1, to_find);
+    for (unsigned long i = 0; i < words_wsb.size(); i++)
+    {
+        cout << words_wsb[i];
+        if (i != words_wsb.size() - 1)
+            cout << ", ";
+    } */
+
+    /* 2 */
+
+    const string sentence1 = "My name is Boris, I am a great football player! Team: Boston Boilers";
+    const string to_find = "bo";
     const vector<string> words_wsb = find_same(sentence1, to_find);
     for (unsigned long i = 0; i < words_wsb.size(); i++)
     {
