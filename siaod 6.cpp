@@ -1,40 +1,35 @@
 /*
-1.  Р”Р°РЅР° РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РЅР°С‚СѓСЂР°Р»СЊРЅС‹С… С‡РёСЃРµР» (РѕРґРЅРѕ С‡РёСЃР»Рѕ РІ СЃС‚СЂРѕРєРµ), Р·Р°РІРµСЂС€Р°СЋС‰Р°СЏСЃСЏ С‡РёСЃР»РѕРј 0. 
-	РћРїСЂРµРґРµР»РёС‚Рµ, РєР°РєРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЌС‚РѕР№ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё, СЂР°РІРЅС‹ РµРµ РЅР°РёР±РѕР»СЊС€РµРјСѓ СЌР»РµРјРµРЅС‚Сѓ.
+1.  Дана последовательность натуральных чисел (одно число в строке), завершающаяся числом 0. 
+	Определите, какое количество элементов этой последовательности, равны ее наибольшему элементу.
 
-2.	Р”Р°РЅ Р»РёРЅРµР№РЅС‹Р№ РѕРґРЅРѕРЅР°РїСЂР°РІР»РµРЅРЅС‹Р№ СЃРїРёСЃРѕРє. Р’С‹РІРµСЃС‚Рё Р·РЅР°С‡РµРЅРёСЏ СѓР·Р»РѕРІ СЃРїРёСЃРєР° РїРѕ РїСЂР°РІРёР»Сѓ: 
-	СЃРЅР°С‡Р°Р»Р° РІСЃРµ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рµ, Р·Р°С‚РµРј РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ.
+2.	Дан линейный однонаправленный список. Вывести значения узлов списка по правилу: 
+	сначала все отрицательные, затем все остальные.
 */
 
 #include <iostream>
 using namespace std;
 
-// РѕРґРЅРѕРЅР°РїСЂР°РІР»РµРЅРЅС‹Р№ СЃРїРёСЃРѕРє
-struct Node 
-{
+// однонаправленный список
+struct Node {
 	int val;
 	Node* next;
 
 	Node(int _val) : val(_val), next(nullptr) {}
 };
 
-struct list 
-{
+struct list {
 	Node* first;
 	Node* last;
 
 	list() : first(nullptr), last(nullptr) {}
 
-	bool is_empty() 
-	{
+	bool is_empty() {
 		return first == nullptr;
 	}
 
-	void push_back(int _val) 
-	{
+	void push_back(int _val) {
 		Node* p = new Node(_val);
-		if (is_empty()) 
-		{
+		if (is_empty()) {
 			first = p;
 			last = p;
 			return;
@@ -43,55 +38,52 @@ struct list
 		last = p;
 	}
 
-	void print() 
-	{
+	void print() {
 		if (is_empty())
 			return;
 
 		Node* p = first;
-		while (p) 
-		{
+		while (p) {
 			cout << p->val << " ";
 			p = p->next;
 		}
 		cout << endl;
 	}
 
-	void emplaceBack(short val) 
-	{
+	void emplaceBack(short val) {
 		Node* new_last = new Node(val);
-		if (is_empty()) 
-		{
+		if (is_empty()) {
 			first = new_last;
 			return;
 		}
 
 		Node* p = first;
 		while (p->next) p = p->next;
-		// СЃРµР№С‡Р°СЃ p = last
+		// now p = last
 		p->next = new_last;
 	}
 
-	// СЂРµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
-	void printCustom(Node* p, list* ans = nullptr) const 
-	{
+	// рекурсивная функция
+	void printCustom(Node* p, list* ans = nullptr) const {
 		if (!ans) ans = new list();
 
-		if (p) 
-		{
-			if (p->val < 0)
+		if (p) {
+			if (p->val < 0) {
 				cout << p->val << " ";
-			else
+			}
+			else {
 				ans->emplaceBack(p->val);
+			}
 			printCustom(p->next, ans);
 		}
-		else
+		else {
 			ans->print();
+		}
 	}
 };
 
 
-// СЂРµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
+// рекурсивная функция
 void rec1(int maximum, int counter)
 {
 	int n;
