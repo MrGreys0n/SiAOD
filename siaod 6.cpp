@@ -10,26 +10,31 @@
 using namespace std;
 
 // однонаправленный список
-struct Node {
+struct Node 
+{
 	int val;
 	Node* next;
 
 	Node(int _val) : val(_val), next(nullptr) {}
 };
 
-struct list {
+struct list 
+{
 	Node* first;
 	Node* last;
 
 	list() : first(nullptr), last(nullptr) {}
 
-	bool is_empty() {
+	bool is_empty() 
+	{
 		return first == nullptr;
 	}
 
-	void push_back(int _val) {
+	void push_back(int _val) 
+	{
 		Node* p = new Node(_val);
-		if (is_empty()) {
+		if (is_empty()) 
+		{
 			first = p;
 			last = p;
 			return;
@@ -38,47 +43,50 @@ struct list {
 		last = p;
 	}
 
-	void print() {
+	void print() 
+	{
 		if (is_empty())
 			return;
 
 		Node* p = first;
-		while (p) {
+		while (p) 
+		{
 			cout << p->val << " ";
 			p = p->next;
 		}
 		cout << endl;
 	}
 
-	void emplaceBack(short val) {
-		Node* new_tail = new Node(val);
-		if (is_empty()) {
-			first = new_tail;
+	void emplaceBack(short val) 
+	{
+		Node* new_last = new Node(val);
+		if (is_empty()) 
+		{
+			first = new_last;
 			return;
 		}
 
 		Node* p = first;
 		while (p->next) p = p->next;
-		// now p = tail
-		p->next = new_tail;
+		// сейчас p = last
+		p->next = new_last;
 	}
 
 	// рекурсивная функция
-	void printCustom(Node* p, list* ans = nullptr) const {
+	void printCustom(Node* p, list* ans = nullptr) const 
+	{
 		if (!ans) ans = new list();
 
-		if (p) {
-			if (p->val < 0) {
+		if (p) 
+		{
+			if (p->val < 0)
 				cout << p->val << " ";
-			}
-			else {
+			else
 				ans->emplaceBack(p->val);
-			}
 			printCustom(p->next, ans);
 		}
-		else {
+		else
 			ans->print();
-		}
 	}
 };
 
@@ -106,7 +114,7 @@ int main()
 {
 	int  maximum = 0, counter = 0;
 	rec1(maximum, counter);
-	cout << "--------------------\n";
+	cout << "\n--------------------\n";
 
 	list l;
 	l.push_back(3);
